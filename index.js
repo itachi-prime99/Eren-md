@@ -1,39 +1,56 @@
-// index.js
+// Importing required modules
 const express = require('express');
-const path = require('path');
-const { generateQRCode } = require('./routes/qrCode');
-const { verifyPairCode } = require('./routes/pairCode');
-const sessionManager = require('./sessionManager');
-
+const session = require('express-session');
+const QRCode = require('qrcode'); // For generating QR codes
 const app = express();
-const port = process.env.PORT || 3000;
 
-// Middleware to serve static files (HTML, CSS, JS)
-app.use(express.static(path.join(__dirname, 'public')));
+// Setting up middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Home route to render the QR Code page
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
+// Session setup
+app.use(session({
+    secret: 'your_session_secret', // Change this to a secure secret key
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Change to true for HTTPS
+}));
 
-// Route to generate QR Code
+// Simple route to generate QR Code
 app.get('/generate-qr', (req, res) => {
-  const qrCodeData = generateQRCode();
-  res.json({ qrCodeData });
+    const sessionId = Math.floor(Math.random() * 1000000); // Generating a random session ID
+    req.session.sessionId = sessionId; // Save session ID in the session
+    const data = `http://localhost:3000/verify-pair-code?sessionId=${sessionId}`;
+
+    // Generating QR code
+    QRCode.toDataURL(data, (err, qrCodeUrl) => {
+        if (err) {
+            return res.status(500).send('Error generating QR Code.');
+        }
+        res.json({
+            success: true,
+            qrCodeUrl
+        });
+    });
 });
 
 // Route to verify pair code
-app.post('/verify-pair-code', express.json(), (req, res) => {
-  const { pairCode } = req.body;
-  const isVerified = verifyPairCode(pairCode);
-  if (isVerified) {
-    res.json({ success: true, message: 'Pairing successful!' });
-  } else {
-    res.status(400).json({ success: false, message: 'Invalid pair code.' });
-  }
+app.post('/verify-pair-code', (req, res) => {
+    const { pairCode } = req.body;
+    
+    if (req.session.sessionId) {
+        // Simple pair code verification
+        if (pairCode === req.session.sessionId.toString()) {
+            return res.json({ success: true, message: 'Pair code verified successfully!' });
+        }
+        return res.status(400).json({ success: false, message: 'Invalid pair code!' });
+    } else {
+        return res.status(400).json({ success: false, message: 'Session not found.' });
+    }
 });
 
-// Start the server
+// Starting the server
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+    console.log(`Server running on port ${port}`);
 });
