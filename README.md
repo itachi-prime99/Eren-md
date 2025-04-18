@@ -1,24 +1,19 @@
-# GoatBot Messenger Web Dashboard
+# WhatsApp Bot Web UI
 
-This project provides a simple web-based control panel for managing the **GoatBot Messenger**, a bot running on **Node.js**. You can start and stop the bot using this dashboard, and monitor its status through the interface.
+A stylish web interface to monitor and control your WhatsApp bot — inspired by platforms like Render.
 
 ## Features
 
-- **Start and Stop GoatBot** via the web interface.
-- **Log Display** to show bot activity.
-- **Customizable**: Easy to modify for different bot setups.
-- **Beautiful Background**: Powered by a custom background image.
+- Beautiful UI with background image
+- Start and Stop your bot from the browser
+- Real-time status updates
+- Simple Express backend
+- Fully responsive design
 
-## Requirements
+## Preview
 
-To run this project, you'll need the following:
+![Preview](https://i.imgur.com/I42gCZw.jpeg)
 
-- **Node.js** installed on your server or local machine.
-- **GoatBot** set up with the proper entry script (e.g., `goatbot.js`).
+---
 
-## Setup Instructions
-
-1. Clone or download the project files to your server or local machine.
-
-   ```bash
-   git clone https://github.com/your-repo/goatbot-dashboard.git
+## Project Structure
