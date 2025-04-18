@@ -1,7 +1,7 @@
 {
   "name": "qr-pair-code-system",
   "version": "1.0.0",
-  "description": "QR Code + Pair Code system",
+  "description": "QR Code and Pair Code system",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -9,10 +9,12 @@
   "dependencies": {
     "express": "^4.17.1",
     "express-session": "^1.17.2",
-    "qrcode": "^1.4.4"
+    "qrcode": "^1.5.0"
   },
+  "devDependencies": {},
   "engines": {
     "node": "14.x"
   },
-  "license": "MIT"
+  "author": "EREN",
+  "license": "ISC"
 }
