@@ -16,6 +16,11 @@ app.use(session({
     cookie: { secure: false } // Change to true for HTTPS
 }));
 
+// Root route
+app.get('/', (req, res) => {
+    res.send('Welcome to the QR and Pair Code System!');
+});
+
 // Simple route to generate QR Code
 app.get('/generate-qr', (req, res) => {
     const sessionId = Math.floor(Math.random() * 1000000); // Generating a random session ID
