@@ -3,79 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoatBot Messenger Control Panel</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-image: url('https://i.imgur.com/I42gCZw.jpeg');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            text-align: center;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            width: 100%;
-            max-width: 500px;
-        }
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-        button {
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            font-size: 18px;
-            cursor: pointer;
-            margin: 10px;
-            border-radius: 5px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .log {
-            font-size: 14px;
-            margin-top: 20px;
-            max-height: 150px;
-            overflow-y: auto;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 5px;
-        }
-    </style>
+    <title>Your WhatsApp Bot</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <header>
+        <h1>Your WhatsApp Bot</h1>
+        <p>Bot Status: <span id="bot-status">Not Running</span></p>
+    </header>
 
-    <div class="container">
-        <h1>GoatBot Messenger Control Panel</h1>
-        <button id="startButton">Start Bot</button>
-        <button id="stopButton">Stop Bot</button>
+    <main>
+        <section>
+            <h2>Bot Details</h2>
+            <p>Bot Name: Xos Eren's Bot</p>
+            <p>Owner: Eren Yeager</p>
+            <p>Bot Number: +8801839268235</p>
+        </section>
 
-        <div class="log" id="logDisplay">Logs will appear here...</div>
-    </div>
+        <section>
+            <h2>Commands</h2>
+            <ul>
+                <li><strong>uptime</strong> - Shows bot's uptime</li>
+                <li><strong>help</strong> - Displays available commands</li>
+                <li><strong>join</strong> - Lists the groups the bot is in</li>
+                <li><strong>ping</strong> - Checks bot's response time</li>
+            </ul>
+        </section>
 
-    <script>
-        document.getElementById('startButton').onclick = function() {
-            fetch('/start').then(response => response.json()).then(data => {
-                document.getElementById('logDisplay').innerText = data.message;
-            });
-        };
+        <section>
+            <h2>Control Your Bot</h2>
+            <button id="start-bot">Start Bot</button>
+            <button id="stop-bot">Stop Bot</button>
+        </section>
+    </main>
 
-        document.getElementById('stopButton').onclick = function() {
-            fetch('/stop').then(response => response.json()).then(data => {
-                document.getElementById('logDisplay').innerText = data.message;
-            });
-        };
-    </script>
+    <footer>
+        <p>&copy; 2025 Eren Yeager | All Rights Reserved</p>
+    </footer>
 
+    <script src="script.js"></script>
 </body>
 </html>
