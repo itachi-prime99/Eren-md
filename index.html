@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoatBot Messenger Control Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://i.imgur.com/I42gCZw.jpeg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .log {
+            font-size: 14px;
+            margin-top: 20px;
+            max-height: 150px;
+            overflow-y: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>GoatBot Messenger Control Panel</h1>
+        <button id="startButton">Start Bot</button>
+        <button id="stopButton">Stop Bot</button>
+
+        <div class="log" id="logDisplay">Logs will appear here...</div>
+    </div>
+
+    <script>
+        document.getElementById('startButton').onclick = function() {
+            fetch('/start').then(response => response.json()).then(data => {
+                document.getElementById('logDisplay').innerText = data.message;
+            });
+        };
+
+        document.getElementById('stopButton').onclick = function() {
+            fetch('/stop').then(response => response.json()).then(data => {
+                document.getElementById('logDisplay').innerText = data.message;
+            });
+        };
+    </script>
+
+</body>
+</html>
