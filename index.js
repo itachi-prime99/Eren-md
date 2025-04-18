@@ -1,103 +1,39 @@
-const { Client } = require('whatsapp-web.js');
-const fs = require('fs');
-const path = require('path');
+// index.js
 const express = require('express');
-const { exec } = require('child_process');
+const path = require('path');
+const { generateQRCode } = require('./routes/qrCode');
+const { verifyPairCode } = require('./routes/pairCode');
+const sessionManager = require('./sessionManager');
 
-// Create a new client
-const client = new Client();
-
-// Initialize Express for optional web dashboard
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-// Command handling
-const commands = {};
+// Middleware to serve static files (HTML, CSS, JS)
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Load commands dynamically from the 'commands' folder
-fs.readdirSync('./commands').forEach(file => {
-    if (file.endsWith('.js')) {
-        const command = require(`./commands/${file}`);
-        commands[command.name] = command;
-    }
-});
-
-// Log the bot in
-client.on('ready', () => {
-    console.log('Bot is ready!');
-});
-
-// Handle incoming messages
-client.on('message', async (message) => {
-    if (message.body.startsWith('/cmd')) {
-        const command = message.body.slice(5).trim();
-        
-        if (commands[command]) {
-            try {
-                await commands[command].execute(message);
-            } catch (error) {
-                message.reply('An error occurred while processing your command.');
-            }
-        } else {
-            message.reply('Unknown command. Please try again.');
-        }
-    }
-});
-
-// Listen for messages in group chats only
-client.on('message_create', async (message) => {
-    if (message.from.startsWith('group')) {
-        if (message.body.startsWith('/cmd')) {
-            const command = message.body.slice(5).trim();
-
-            if (commands[command]) {
-                try {
-                    await commands[command].execute(message);
-                } catch (error) {
-                    message.reply('An error occurred while processing your command.');
-                }
-            } else {
-                message.reply('Unknown command.');
-            }
-        }
-    }
-});
-
-// Command to install a new command dynamically
-const installCommand = async (message) => {
-    if (message.hasQuotedMsg) {
-        const quotedMessage = await message.getQuotedMessage();
-        const file = quotedMessage.body;
-
-        if (file.endsWith('.js')) {
-            const commandPath = path.join(__dirname, 'commands', file);
-
-            fs.writeFile(commandPath, file, (err) => {
-                if (err) {
-                    message.reply('Failed to install the command.');
-                } else {
-                    message.reply('Command installed successfully!');
-                    // Dynamically load the new command
-                    const newCommand = require(commandPath);
-                    commands[newCommand.name] = newCommand;
-                }
-            });
-        } else {
-            message.reply('Please send a valid `.js` file.');
-        }
-    } else {
-        message.reply('Please quote a `.js` file to install.');
-    }
-};
-
-// Serve the bot on a web server (optional)
+// Home route to render the QR Code page
 app.get('/', (req, res) => {
-    res.send('Goat Bot is running!');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// Route to generate QR Code
+app.get('/generate-qr', (req, res) => {
+  const qrCodeData = generateQRCode();
+  res.json({ qrCodeData });
+});
+
+// Route to verify pair code
+app.post('/verify-pair-code', express.json(), (req, res) => {
+  const { pairCode } = req.body;
+  const isVerified = verifyPairCode(pairCode);
+  if (isVerified) {
+    res.json({ success: true, message: 'Pairing successful!' });
+  } else {
+    res.status(400).json({ success: false, message: 'Invalid pair code.' });
+  }
+});
+
+// Start the server
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running on port ${port}`);
 });
-
-// Initialize the WhatsApp client
-client.initialize();
