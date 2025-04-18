@@ -1,32 +1,30 @@
 const express = require('express');
-const app = express();
 const path = require('path');
-const { exec } = require('child_process');
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.use(express.static(path.join(__dirname, 'public')));
+let isBotRunning = false;
 
-// Start Bot Endpoint
+// Serve static files (HTML, CSS, JS)
+app.use(express.static(path.join(__dirname)));
+
+// Start Bot endpoint
 app.get('/start', (req, res) => {
-    exec('node goatbot.js', (error, stdout, stderr) => {
-        if (error) {
-            console.error(`exec error: ${error}`);
-            return res.json({ message: `Error starting bot: ${stderr}` });
-        }
-        res.json({ message: 'Bot started successfully!' });
-    });
+  isBotRunning = true;
+  res.json({ status: 'Bot started', running: isBotRunning });
 });
 
-// Stop Bot Endpoint
+// Stop Bot endpoint
 app.get('/stop', (req, res) => {
-    exec('killall node', (error, stdout, stderr) => {
-        if (error) {
-            console.error(`exec error: ${error}`);
-            return res.json({ message: `Error stopping bot: ${stderr}` });
-        }
-        res.json({ message: 'Bot stopped successfully!' });
-    });
+  isBotRunning = false;
+  res.json({ status: 'Bot stopped', running: isBotRunning });
 });
 
-app.listen(3000, () => {
-    console.log('Server running on port 3000');
+// Bot status endpoint
+app.get('/status', (req, res) => {
+  res.json({ running: isBotRunning });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running at http://localhost:${PORT}`);
 });
