@@ -1,19 +1,18 @@
 {
-  "name": "eren-qr-system",
+  "name": "qr-pair-code-system",
   "version": "1.0.0",
-  "description": "QR Code and Pair Code System for Eren's bot",
+  "description": "QR Code + Pair Code system",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node index.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "qrcode": "^1.5.0"
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "qrcode": "^1.4.4"
   },
-  "devDependencies": {
-    "nodemon": "^2.0.22"
+  "engines": {
+    "node": "14.x"
   },
-  "author": "Eren",
-  "license": "ISC"
+  "license": "MIT"
 }
