@@ -1,0 +1,19 @@
+{
+  "name": "whatsapp-goat-bot",
+  "version": "1.0.0",
+  "description": "A WhatsApp bot built using whatsapp-web.js for automating tasks, handling group commands, and dynamically installing new commands.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "whatsapp-web.js": "^1.18.0",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "child_process": "^1.0.2"
+  },
+  "devDependencies": {},
+  "author": "Eren Yeager",
+  "license": "MIT"
+}
