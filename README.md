@@ -1,30 +1,22 @@
-# WhatsApp Goat Bot
+# QR Code + Pair Code System
 
-## Description
-
-A WhatsApp bot built with **whatsapp-web.js** for automating tasks, handling group commands, and installing new commands dynamically. This bot is designed to allow command execution in group chats and the ability to install new commands by quoting `.js` files.
+This is a simple **QR Code + Pair Code system** that allows users to scan a QR code and then enter a pair code to verify and establish a session. The system uses **Express.js** for the backend, and it generates QR codes with unique session IDs.
 
 ## Features
-
-- **Command Handling**: Process various commands like `/cmd install` to install new commands.
-- **Group Support**: Commands can be executed in group chats.
-- **Dynamic Command Installation**: Add new commands by quoting `.js` files in the chat.
-- **Uptime Command**: Displays the bot's uptime.
-- **Command Reload**: Reload commands without restarting the bot.
+- **QR Code Generation**: Generates a QR code with a unique session ID.
+- **Pair Code Verification**: Allows users to enter a pair code to verify the session.
+- **Session Management**: Secure session management with session expiration.
+- **Configurable**: Easy to configure session secrets, QR code data, and other settings.
 
 ## Installation
 
 ### Prerequisites
+- **Node.js** (version >= 14.x)
+- **npm** (Node Package Manager)
 
-1. **Node.js** (Version 12 or above)
-2. **whatsapp-web.js**: For WhatsApp Web API.
-3. **Express**: Optional, for any web-based dashboard.
-4. **MongoDB**: For storing persistent data (optional depending on your setup).
+### Steps to Set Up
 
-### Steps to Setup
-
-1. **Clone the Repository**:
+1. Clone the repository:
    ```bash
-   git clone your repo link
-   cd your-repository-folder
-   npm install
+   git clone https://github.com/yourusername/qr-pair-code-system.git
+   cd qr-pair-code-system
