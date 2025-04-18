@@ -1,6 +1,6 @@
-module.exports = {
-  sessionSecret: 'e8f9c89bb2e0ed0d72ab1d3d9d93ef1a97d7c19b6db22cc49629c5e61835cf55',  // A securely generated key
-  sessionDuration: 60 * 60 * 24,  // 24 hours (in seconds)
-  pairCodeTimeout: 15 * 60 * 1000,  // 15 minutes (in milliseconds)
-  qrCodeData: 'example-session-data',  // Example QR code data that can be customized
-};
+{
+    "botSettings": {
+        "phoneNumber": "+8801839268235",
+        "botName": "GoatBot Messenger"
+    }
+}
