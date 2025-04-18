@@ -1,14 +1,14 @@
 {
-  "name": "goatbot-web-dashboard",
+  "name": "whatsapp-bot-web-ui",
   "version": "1.0.0",
-  "description": "Web Dashboard for controlling GoatBot Messenger",
+  "description": "A stylish web UI to control and monitor your WhatsApp bot like Render.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
-  "dependencies": {
-    "express": "^4.17.1"
-  },
   "author": "Eren Yeager",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
